@@ -766,8 +766,9 @@ def go():
         raise e
 
 
-# start everything going
-go()
+if __name__ == "__main__":
+    # start everything going
+    go()
 
 ###############################################################################
 # TESTING
