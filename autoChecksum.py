@@ -31,6 +31,9 @@
 # ----
 # new version 31.01.2017 -> saw the boundary case for the first time so added
 # some comments to make it clear why we logged the boundary case
+# ----
+# new version 21.04.2017 -> Error handle to ticket, sets ticket priority to 100
+# also checks that python version is 3.
 ###############################################################################
 
 ###############################################################################
@@ -64,6 +67,10 @@ import logging
 
 # get datetime for naming the log files
 import datetime
+
+import sys  # to check python version
+
+assert sys.version_info >= (3, 0)
 
 # initiate logging
 logger = logging.getLogger('autoChecksum')
@@ -739,6 +746,10 @@ def run():
         try:
             results = getResultsOfTicketTest(id)
         except BaseException as ex:
+            # If there is an error here then print it to the ticket
+            addComment(id, ("An Error Occurred While Processing Ticket:\n"
+                            "{}").format(ex))
+            editTicketPriority(id, 100)
             logger.exception(ex)
         else:
             addComment(id, results[0])
@@ -764,6 +775,7 @@ def go():
         logger.exception(e)
         # in this case, it was unpredicted so raise the exception
         raise e
+
 
 if __name__ == "__main__":
     # start everything going
