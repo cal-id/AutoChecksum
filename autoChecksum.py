@@ -765,7 +765,6 @@ def go():
         # in this case, it was unpredicted so raise the exception
         raise e
 
-
 if __name__ == "__main__":
     # start everything going
     go()
