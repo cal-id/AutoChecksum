@@ -34,6 +34,9 @@
 # ----
 # new version 21.04.2017 -> Error handle to ticket, sets ticket priority to 100
 # also checks that python version is 3.
+# ----
+# new version 28.06.2017 -> Add EXPECTED_NUM_ATTACHMENTS global rather than
+# hard coding to '5'
 ###############################################################################
 
 ###############################################################################
@@ -88,6 +91,17 @@ logger.debug('logging started')
 # encrypted but we can't be sure that the server we are connecting to is who
 # we think they are.
 requests.packages.urllib3.disable_warnings()
+
+# If the script recieves a number of attachments per ticket that isn't this,
+# it raises an error. Normally this should be set to 5. However, this script
+# reports its results back to the ticket as an attachment so if you are trying
+# to rerun this script semi manually against a ticket it has already processed,
+# this global must be set.
+# CHANGE WITH CAUTION: This is one of the main checks that the ticket hasn't
+#                      been merged, without this check, errors could go
+#                      missing through resolving only one part of a merged
+#                      ticket.
+EXPECTED_NUM_ATTACHMENTS = 5
 
 # TODO: NEED NEW USERNAME AND PASSWORD WHEN LIVE
 # post username and password to get cookie
@@ -246,7 +260,7 @@ def getTicketAttachments(id):
 def getTicketContent(i):
     strId = str(i)
     ticketAttachments = getTicketAttachments(i)
-    if len(ticketAttachments) != 5:
+    if len(ticketAttachments) != EXPECTED_NUM_ATTACHMENTS:
         # LIMITATION: doesn't work with merged tickets
         raise Exception(('Unexpected length of ticket attachments at id: {}'
                          ' this probably means that this ticket has'
