@@ -81,4 +81,6 @@ if __name__ == "__main__":
     ticketsToTest = getNewTicketsInChecksumQueueWithPriority100()
     print("These are the tickets priority 100:")
     print(ticketsToTest)
-
+    if not autoChecksum.checkSshAgent:
+        print("SSH AGENT ISN'T RUNNING, be prepared to enter your password...
+               a lot!")
