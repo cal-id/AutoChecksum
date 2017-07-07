@@ -37,6 +37,11 @@
 # ----
 # new version 28.06.2017 -> Add EXPECTED_NUM_ATTACHMENTS global rather than
 # hard coding to '5'
+# ----
+# new version 07.07.2017 -> Create the 'log/' dir if necessary
+#                        -> Check that scripts are executable rather than
+#                           attempting to run and raising an error to the 
+#                           ticket.
 ###############################################################################
 
 ###############################################################################
