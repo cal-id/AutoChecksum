@@ -44,6 +44,7 @@
 #                           attempting to run and raising an error to the 
 #                           ticket.
 #                        -> Add a production USER_NAME and USER_PASSWORD
+#                        -> Force ssh as root.
 ###############################################################################
 
 ###############################################################################
