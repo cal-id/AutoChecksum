@@ -510,6 +510,16 @@ def checkSshAgent():
     return True
 
 
+# Checks that the wrapper scripts ssh*.sh are executable
+def checkScriptsExecutable():
+    for script in ("sshRalreplicas.sh", "sshCat.sh", "sshLs.sh"):
+        if not os.access(script, os.X_OK):
+            logger.exception("The script '{}' must be executable. "
+                             "Use 'chmod 755 {}'".format(script, script))
+            return False
+    return True
+
+
 # input a ticket (dict) and return whether it can be resolved overall and
 # whether each NOK can be resolved
 # returns flagCanResolveTicket=True IF THE FILE DOESNT EXIST - THIS MEANS
@@ -758,6 +768,11 @@ def run():
             # for the moment print this to console because it is so fundamental
             # TODO: is this needed when the script is run by cronjob?
             print("ssh agent check failed")
+            return
+        if not checkScriptsExecutable():
+            # if the scripts are not executable then exit because they are 
+            # fundamental
+            print("Scripts not executable, check logs")
             return
     for id in ticketsToTest:
         # go through each id
