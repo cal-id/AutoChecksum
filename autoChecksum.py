@@ -17,6 +17,7 @@
 # - ./sshLs.sh            file
 # - ./sshRalreplicas.sh   file
 # - ./log/                folder
+# - ./secret.py           file    
 ###############################################################################
 
 ###############################################################################
@@ -42,6 +43,7 @@
 #                        -> Check that scripts are executable rather than
 #                           attempting to run and raising an error to the 
 #                           ticket.
+#                        -> Add a production USER_NAME and USER_PASSWORD
 ###############################################################################
 
 ###############################################################################
@@ -79,6 +81,10 @@ import datetime
 import sys  # to check python version
 
 import os  # to perform startup checks 
+
+# Import the user password from a local file
+# secret.py. Avoid committing this to git!
+from secret import USER_PASSWORD
 assert sys.version_info >= (3, 0)
 
 # initiate logging
@@ -112,11 +118,9 @@ requests.packages.urllib3.disable_warnings()
 #                      ticket.
 EXPECTED_NUM_ATTACHMENTS = 5
 
-# TODO: NEED NEW USERNAME AND PASSWORD WHEN LIVE
 # post username and password to get cookie
 # 'verify=False' ignores certificate authentication
-USER_NAME = 'callum.iddon@stfc.ac.uk'
-USER_PASSWORD = 'passHDci5'
+USER_NAME = 'chksum_admin'
 cookieRequest = requests.post('https://helpdesk.gridpp.rl.ac.uk/',
                               verify=False, data={'user': USER_NAME,
                                                   'pass': USER_PASSWORD})
