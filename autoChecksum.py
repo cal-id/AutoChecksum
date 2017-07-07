@@ -73,9 +73,13 @@ import datetime
 
 import sys  # to check python version
 
+import os  # to perform startup checks 
 assert sys.version_info >= (3, 0)
 
 # initiate logging
+# Check if the log directory exists, if not create it
+if not os.path.isdir("log"):
+    os.mkdir("log")
 logger = logging.getLogger('autoChecksum')
 fileLogHandler = logging.FileHandler(('./log/'
                                       + str(datetime.datetime.now())
