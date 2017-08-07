@@ -7,6 +7,8 @@ There is only one requirement: the python `requests` module.
 
 Install this with `pip3 install requests`.
 
+Create a file `secret.py` containing the password for the RT user account. Copy `secret.py.example` for the format.
+
 ## Usage
 
 Run `python3 autoChecksum.py` to process the tickets manually. This creates logs under `log/`.
